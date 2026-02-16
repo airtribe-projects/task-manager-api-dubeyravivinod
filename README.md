@@ -1,220 +1,269 @@
-# Task Management RESTful API
+# Task Manager API
 
-A RESTful API for managing tasks built with Node.js and Express.js using in-memory data storage. This project implements full CRUD functionality, input validation, filtering, and centralized error handling.
+A RESTful API for managing tasks built with Node.js and Express. This API provides CRUD operations for task management with in-memory data storage.
 
----
+## Features
 
-## Project Overview
-
-This API allows users to:
-
-- Create a task
-- Retrieve all tasks
-- Retrieve a single task by ID
-- Update a task
-- Delete a task
-- Filter tasks using query parameters
-
-The application uses in-memory storage (no database) to focus on core REST API concepts and Express.js fundamentals.
-
----
+- ✅ Create, Read, Update, and Delete tasks
+- ✅ RESTful API design
+- ✅ Unique task ID generation using UUID
+- ✅ In-memory data storage
+- ✅ JSON request/response format
+- ✅ Input validation
 
 ## Tech Stack
 
-- Node.js
-- Express.js
-- JavaScript (ES6+)
-- Jest (for testing)
-- Postman or curl (for API testing)
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **UUID** - Unique identifier generation
+- **Nodemon** - Development auto-reload
 
----
+## Project Structure
 
-## Installation & Setup
-
-### 1. Clone the repository
-
-```bash
-git clone <your-repository-url>
-cd <repository-name>
+```
+TaskManagerAPI/
+├── app.js                  # Main application entry point
+├── package.json            # Project dependencies and scripts
+├── controllers/
+│   └── taskController.js   # Request handlers for task operations
+├── models/
+│   └── taskModel.js        # Data model and business logic
+└── routes/
+    └── taskRoutes.js       # API route definitions
 ```
 
-### 2. Install dependencies
+## Installation
 
+1. Clone the repository:
+```bash
+git clone https://github.com/dubeyravivinod/TaskManagerAPI.git
+cd TaskManagerAPI
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-### 3. Start the server
-
+3. Start the server:
 ```bash
 npm start
 ```
 
-The server runs on:
-
-```
-http://localhost:3000
-```
-
----
-
-## Running Tests
-
-To execute all test cases:
-
-```bash
-npm run test
-```
-
-Ensure all tests are passing before submitting your project.
-
----
+The server will start on `http://localhost:3000`
 
 ## API Endpoints
 
-Base URL:
-
+### Base URL
 ```
-http://localhost:3000/api/tasks
+http://localhost:3000/api
 ```
 
----
+### Endpoints
 
-### Create a Task
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/tasks` | Get all tasks |
+| GET | `/tasks/:id` | Get a specific task by ID |
+| POST | `/tasks` | Create a new task |
+| PUT | `/tasks/:id` | Update a task by ID |
+| DELETE | `/tasks/:id` | Delete a task by ID |
 
-**POST** `/api/tasks`
+## Usage Examples
 
-Request body:
+### 1. Create a Task
 
-```json
+**Request:**
+```bash
+POST /api/tasks
+Content-Type: application/json
+
 {
-  "title": "Complete assignment",
-  "description": "Finish the REST API project",
+  "title": "Complete project documentation",
+  "description": "Write comprehensive README file",
   "completed": false
 }
 ```
 
-Response example:
-
+**Response:**
 ```json
 {
-  "id": "1",
-  "title": "Complete assignment",
-  "description": "Finish the REST API project",
+  "message": "Task created successfully",
+  "newTask": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Complete project documentation",
+    "description": "Write comprehensive README file",
+    "completed": false
+  }
+}
+```
+
+### 2. Get All Tasks
+
+**Request:**
+```bash
+GET /api/tasks
+```
+
+**Response:**
+```json
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Complete project documentation",
+    "description": "Write comprehensive README file",
+    "completed": false
+  }
+]
+```
+
+### 3. Get Task by ID
+
+**Request:**
+```bash
+GET /api/tasks/550e8400-e29b-41d4-a716-446655440000
+```
+
+**Response:**
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Complete project documentation",
+  "description": "Write comprehensive README file",
   "completed": false
 }
 ```
 
----
+### 4. Update a Task
 
-### Get All Tasks
+**Request:**
+```bash
+PUT /api/tasks/550e8400-e29b-41d4-a716-446655440000
+Content-Type: application/json
 
-**GET** `/api/tasks`
-
-Optional query parameters:
-
-- `completed=true|false`
-- `title=<keyword>`
-
-Example:
-
-```
-GET /api/tasks?completed=false
-```
-
----
-
-### Get Task by ID
-
-**GET** `/api/tasks/:id`
-
-Example:
-
-```
-GET /api/tasks/1
-```
-
----
-
-### Update a Task
-
-**PUT** `/api/tasks/:id`
-
-Request body (partial updates allowed if implemented):
-
-```json
 {
-  "title": "Updated title",
+  "title": "Complete project documentation",
+  "description": "Write comprehensive README file",
   "completed": true
 }
 ```
 
----
-
-### Delete a Task
-
-**DELETE** `/api/tasks/:id`
-
----
-
-## Error Handling
-
-The API returns structured error responses.
-
-### 400 - Bad Request
-- Missing required fields
-- Invalid input types
-
-### 404 - Not Found
-- Task does not exist
-
-### 500 - Internal Server Error
-- Unexpected server failure
-
-Example error response:
-
+**Response:**
 ```json
 {
-  "error": "Task not found"
+  "message": "Task updated successfully",
+  "updatedTask": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Complete project documentation",
+    "description": "Write comprehensive README file",
+    "completed": true
+  }
 }
 ```
 
----
+### 5. Delete a Task
 
-## Input Validation
-
-Validation rules:
-
-- `title` is required and must be a non-empty string
-- `completed` must be a boolean (if provided)
-- Invalid fields are rejected
-- Request body must be valid JSON
-
----
-
-## Testing the API Manually
-
-Using curl:
-
+**Request:**
 ```bash
-curl -X GET http://localhost:3000/api/tasks
+DELETE /api/tasks/550e8400-e29b-41d4-a716-446655440000
 ```
 
-You may also use Postman or any REST client.
+**Response:**
+```json
+{
+  "message": "Task deleted successfully",
+  "deletedTask": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Complete project documentation",
+    "description": "Write comprehensive README file",
+    "completed": true
+  }
+}
+```
 
----
+## Task Object Structure
 
-## Submission Checklist
+```json
+{
+  "id": "string (UUID)",
+  "title": "string (required)",
+  "description": "string (required)",
+  "completed": "boolean (required)"
+}
+```
 
-- API implemented with all CRUD operations
-- Proper validation and error handling
-- Filtering implemented
-- All tests passing (`npm run test`)
-- Code pushed to `main` branch
-- Pull Request (#1) created to `feedback` branch
+## Error Responses
 
----
+### 404 Not Found
+```json
+{
+  "message": "Task not found"
+}
+```
+
+### 400 Bad Request
+```json
+{
+  "message": "Missing required fields"
+}
+```
+
+## Testing with cURL
+
+### Create a task:
+```bash
+curl -X POST http://localhost:3000/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title":"My Task","description":"Task description","completed":false}'
+```
+
+### Get all tasks:
+```bash
+curl http://localhost:3000/api/tasks
+```
+
+### Get a specific task:
+```bash
+curl http://localhost:3000/api/tasks/{task-id}
+```
+
+### Update a task:
+```bash
+curl -X PUT http://localhost:3000/api/tasks/{task-id} \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Updated Task","description":"Updated description","completed":true}'
+```
+
+### Delete a task:
+```bash
+curl -X DELETE http://localhost:3000/api/tasks/{task-id}
+```
+
+## Development
+
+Start the development server with auto-reload:
+```bash
+npm start
+```
+
+## Notes
+
+- This API uses in-memory storage. All data will be lost when the server restarts.
+- For production use, consider implementing persistent storage (database).
+- No authentication is implemented in this version.
+
+## Author
+
+**Dubey Ravi Vinod**
 
 ## License
 
-This project is for educational purposes only.
+ISC
+
+## Repository
+
+[https://github.com/dubeyravivinod/TaskManagerAPI](https://github.com/dubeyravivinod/TaskManagerAPI)
+
+## Issues
+
+Report issues at: [https://github.com/dubeyravivinod/TaskManagerAPI/issues](https://github.com/dubeyravivinod/TaskManagerAPI/issues)

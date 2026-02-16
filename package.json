@@ -1,24 +1,28 @@
 {
-  "name": "task-manager",
+  "name": "taskmanagerapi",
   "version": "1.0.0",
-  "description": "Assignment 1 for backend engineering launchpad",
+  "description": "This is the Project 1",
+  "homepage": "https://github.com/dubeyravivinod/TaskManagerAPI#readme",
+  "bugs": {
+    "url": "https://github.com/dubeyravivinod/TaskManagerAPI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dubeyravivinod/TaskManagerAPI.git"
+  },
+  "license": "ISC",
+  "author": "Dubey Ravi Vinod",
+  "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
-  },
-  "author": "Airtribe",
-  "license": "ISC",
-  "devDependencies": {
-    "supertest": "^6.3.4",
-    "tap": "^18.6.1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "dependencies": {
-    "express": "^4.21.2",
-    "fs": "^0.0.1-security",
-    "nodemon": "^3.1.10"
+    "express": "^5.2.1",
+    "uuid": "^13.0.0"
   },
-  "engines": {
-    "node": ">= 18.0.0"
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
